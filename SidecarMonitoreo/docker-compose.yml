@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  sidecar-monitoring:
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - sidecar_network
+
+  fluentd:
+    build: ./fluentd
+    ports:
+      - "24224:24224"
+    volumes:
+      - ./fluentd/log:/fluentd/log
+    networks:
+      - sidecar_network
+
+networks:
+  sidecar_network:
+    driver: bridge
